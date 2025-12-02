@@ -21,7 +21,6 @@ fn solve_part_two(lines: &Vec<String>) {
             for num in left_r..=right_r {
                 let id_string = num.to_string();
                 let len = id_string.len();
-                let mut invalid = false;
 
                 for seq_len in 1..=(len / 2) {
                     if len % seq_len != 0 {
@@ -32,13 +31,9 @@ fn solve_part_two(lines: &Vec<String>) {
                     let times = len / seq_len;
 
                     if seq.repeat(times) == id_string {
-                        invalid = true;
+                        sum += num;
                         break;
                     }
-                }
-
-                if invalid {
-                    sum += num;
                 }
             }
         });
