@@ -17,16 +17,15 @@ fn solve_part_two(lines: &Vec<String>) {
     for line in lines {
         line.split(',').for_each(|range| {
             let ids: Vec<_> = range.split('-').collect();
-            let (left_r, right_r) = get_range_ids(&ids);            
+            let (left_r, right_r) = get_range_ids(&ids);
             for num in left_r..=right_r {
-
                 let id_string = num.to_string();
                 let len = id_string.len();
                 let mut invalid = false;
 
-                for seq_len in 1..=(len/2) { 
+                for seq_len in 1..=(len / 2) {
                     if len % seq_len != 0 {
-                        continue; 
+                        continue;
                     }
 
                     let seq = &id_string[0..seq_len];
@@ -34,9 +33,9 @@ fn solve_part_two(lines: &Vec<String>) {
 
                     if seq.repeat(times) == id_string {
                         invalid = true;
-                        break; 
+                        break;
                     }
-                } 
+                }
 
                 if invalid {
                     sum += num;
@@ -53,7 +52,7 @@ fn solve_part_one(lines: &Vec<String>) {
     for line in lines {
         line.split(',').for_each(|range| {
             let ids: Vec<_> = range.split('-').collect();
-            let (left_r, right_r) = get_range_ids(&ids);            
+            let (left_r, right_r) = get_range_ids(&ids);
             for num in left_r..=right_r {
                 if is_same_sequence_twice(&num.to_string()) {
                     sum += num;
@@ -72,7 +71,7 @@ pub fn solve() {
             let to_vec_lines: Vec<String> = lines.map_while(Result::ok).collect();
             solve_part_one(&to_vec_lines);
             solve_part_two(&to_vec_lines);
-        },
-        _ => panic!("Could not solve problem")
+        }
+        _ => panic!("Could not solve problem"),
     }
 }
