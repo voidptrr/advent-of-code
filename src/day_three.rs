@@ -1,15 +1,15 @@
 use crate::file;
 
 fn sub_sequence_max_by_k(values: &[u32], k: usize) -> u64 {
-    let mut stack: Vec<u32> = Vec::new();
-    let mut sum = 0;
+    let mut stack: Vec<u32> = Vec::with_capacity(k);
 
     for (index, &value) in values.iter().enumerate() {
-        while !stack.is_empty()
-            && value > *stack.last().unwrap()
-            && stack.len() - 1 + (values.len() - index) >= k
-        {
-            stack.pop();
+        while let Some(&last) = stack.last() {
+            if value > last && stack.len() - 1 + (values.len() - index) >= k {
+                stack.pop();
+            } else {
+                break;
+            }
         }
 
         if stack.len() < k {
@@ -17,11 +17,12 @@ fn sub_sequence_max_by_k(values: &[u32], k: usize) -> u64 {
         }
     }
 
-    let result: Vec<String> = stack.iter().map(|v| v.to_string()).collect();
-    assert_eq!(result.len(), k);
-    sum += result.join("").parse::<u64>().unwrap();
+    let mut num: u64 = 0;
+    for &digit in &stack {
+        num = num * 10 + digit as u64;
+    }
 
-    sum
+    num
 }
 
 pub fn solve_part_two(lines: &[String]) {
