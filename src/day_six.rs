@@ -13,7 +13,7 @@ struct Problem {
 }
 
 impl Problem {
-    fn get_count(self: &Self) -> u64 {
+    fn get_count(&self) -> u64 {
         match self.operation {
             Operation::Add => self.numbers.iter().sum(),
             Operation::Multiply => self.numbers.iter().product(),
@@ -86,7 +86,6 @@ fn solve_part_two<T: AsRef<str>>(input: &[T]) -> u64 {
     let mut total_total: u64 = 0;
     loop {
         let mut x = operator_start;
-        println!("op_start: {}", operator_start);
         if operator_start >= operators.len() {
             break;
         }
@@ -117,9 +116,7 @@ fn solve_part_two<T: AsRef<str>>(input: &[T]) -> u64 {
                 x += 1;
                 continue;
             }
-            println!("number column is {}", result);
 
-            println!("Operator {}", op_value as char);
             match op_value {
                 b'*' => {
                     if total == 0 {
